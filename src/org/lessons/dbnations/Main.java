@@ -16,6 +16,8 @@ public class Main {
 		String password ="root";
 		
 		Scanner data = new Scanner(System.in);
+		System.out.print("Inserisci una parola da cercare: ");
+		String userWord = data.nextLine();
 		
 		
 		Connection con = null;
@@ -27,13 +29,14 @@ public class Main {
 			  		+ "on countries.region_id  = regions.region_id  \n"
 			  		+ "Inner join continents \n"
 			  		+ "on regions.continent_id = continents.continent_id \n"
+			  		+ "WHERE countries.name LIKE ?" //filtriamo i dati, inserisco un ? come segnaposto
 			  		+ "Order by countries.name ";
 			  
 			  try(PreparedStatement ps=con.prepareStatement(sql)) {
-
-			  //qui posso utilizzare il PreparedStatement
+				  ps.setString(1, "%us%"); // setto lo statement dicendo che al primo ? deve inserire questo valore
+				  
 			 try(ResultSet rs =ps.executeQuery() )  {
-			  //qui posso utilizzare il ResultSet
+			 
 				 System.out.println("Id nazione\t\tnazione\t\t\tregione\t\t\tContinente");
 				  while (rs.next()) { //se c'è qualcosa da leggere
 					  System.out.println(
@@ -44,8 +47,6 @@ public class Main {
 				  		}
 				  }
 			 }
-			  
-			 
 
 		}catch(SQLException ex) {
 			ex.printStackTrace();
