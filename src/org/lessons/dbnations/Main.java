@@ -33,7 +33,7 @@ public class Main {
 			  		+ "Order by countries.name ";
 			  
 			  try(PreparedStatement ps=con.prepareStatement(sql)) {
-				  ps.setString(1, "%us%"); // setto lo statement dicendo che al primo ? deve inserire questo valore
+				  ps.setString(1, "%"+userWord+"%"); // setto lo statement dicendo che al primo ? deve inserire questo valore
 				  
 			 try(ResultSet rs =ps.executeQuery() )  {
 			 
